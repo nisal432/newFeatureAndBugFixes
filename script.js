@@ -1,6 +1,6 @@
 function getWeather() {
     const cityInput = document.getElementById('city');
-    const cityHeaderInput = document.getElementById('city-header');
+    const cityHeaderInput = cityInput;
     const city = cityInput ? cityInput.value : (cityHeaderInput ? cityHeaderInput.value : '');
 
     if (!city) {
