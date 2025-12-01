@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>hello oworld</h1>
+</body>
+<script>
+	const pr = new Promise((resolve,reject)=>{
+		if(true){
+			setTimeout(() => {
+				reject("hello")
+
+			}, 5000);
+
+		}
+		if(true){
+			setTimeout(() => {
+				resolve(1200);
+			}, 4000);
+		}
+	}).then((value)=>{
+		console.log(value)
+		console.log(pr);
+		return 4;
+
+	}).catch((value)=>{
+		console.log(value);
+		console.log("from line no 30");
+	})
+	console.log(pr);
+</script>
+</html>
