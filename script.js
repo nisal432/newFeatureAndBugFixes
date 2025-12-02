@@ -1,6 +1,7 @@
+localStorage.clear();
 function getWeather() {
     function hideWhenLoading(){
-        const loadingAnimation = document.getElementById('weather-icon3');
+        const loadingAnimation = document.getElementById('loading-state');
         loadingAnimation.classList.toggle('hidden');
         const hiddenWhenLoad = document.getElementById('hiddenWhenLoad');
         hiddenWhenLoad.classList.toggle('hidden');
@@ -18,6 +19,8 @@ function getWeather() {
         alert('Please enter a city');
         return;
     }
+    
+
 
     // Sync input values
     //not necessary
@@ -34,6 +37,7 @@ function getWeather() {
         searchPage.classList.add('hidden');
         resultsPage.classList.remove('hidden');
     }
+    
     
     // Hide search bar if visible
     const searchBar = document.getElementById('header-search-bar');
@@ -53,9 +57,14 @@ function getWeather() {
         .then(geoData => {
             if (!geoData.results || geoData.results.length === 0) {
                 hideWhenLoading()
+                if(localStorage.getItem('validCity')){
+                    cityNameEl.textContent = localStorage.getItem('validCity').charAt(0).toUpperCase() + localStorage.getItem('validCity').slice(1);
+                }
+
                 alert("City not found");
                 return;
             }
+            localStorage.setItem('validCity', city);
 
             const lat = geoData.results[0].latitude;
             const lon = geoData.results[0].longitude;
@@ -209,12 +218,12 @@ function displayCurrentWeather(current, cityName, daily) {
     const cityNameEl = document.getElementById('city-name');
     const weatherCondition = document.getElementById('weather-condition');
     const tempDiv = document.getElementById('temp-div');
+   
     const weatherIcon = document.getElementById('weather-icon');
-    const weatherIcon2 = document.getElementById('weather-icon2');
     const feelsLikeText = document.getElementById('feels-like-text');
     const highLowTemp = document.getElementById('high-low-temp');
     
-    if (!cityNameEl || !weatherCondition || !tempDiv || !weatherIcon2 || !feelsLikeText || !highLowTemp) {
+    if (!cityNameEl || !weatherCondition || !tempDiv || !weatherIcon || !feelsLikeText || !highLowTemp) {
         console.error('Missing DOM elements');
         return;
     }
@@ -228,9 +237,9 @@ function displayCurrentWeather(current, cityName, daily) {
     weatherCondition.textContent = description;
     tempDiv.innerHTML = `${temp}`;
     
-    weatherIcon2.src = getWeatherIcon(weatherCode);
-    weatherIcon2.style.display = 'block';
-    weatherIcon2.classList.toggle('hidden');
+    weatherIcon.src = getWeatherIcon(weatherCode);
+    weatherIcon.style.display = 'block';
+    weatherIcon.classList.toggle('hidden');
     
     
     
@@ -375,7 +384,7 @@ function displayHourlyForecast(hourlyData) {
     let wrapperHtml = '<div class="hourly-forecast-wrapper">';
     
     const itemCount = Math.min(24, hourlyData.time.length); //this is also not necessary always returns 24
-    for (let i = 0; i < itemCount; i++) { //willl be fixing here too
+    for (let i = currentHour; i < itemCount+currentHour; i++) { //willl be fixing here too
         if (!hourlyData.time[i]) continue; //this will be removed
         
         const time = new Date(hourlyData.time[i]);
@@ -384,7 +393,7 @@ function displayHourlyForecast(hourlyData) {
         const hour = time.getHours();
         let displayTime;
         
-        if (i === 0 || (hour === currentHour && time.getDate() === now.getDate())) { // will remove the i ===0 from here
+        if ( (hour === currentHour && time.getDate() === now.getDate())) { // will remove the i ===0 from here
             displayTime = 'Now';
         } else {
             if (hour === 0) {
@@ -409,7 +418,7 @@ function displayHourlyForecast(hourlyData) {
             ? hourlyData.precipitation_probability[i]
             : 0;
         
-        const isCurrent = i === 0 || (hour === currentHour && time.getDate() === now.getDate());
+        const isCurrent =(hour === currentHour && time.getDate() === now.getDate());
         const itemClass = isCurrent ? 'hourly-item current' : 'hourly-item';
 
         wrapperHtml += `
