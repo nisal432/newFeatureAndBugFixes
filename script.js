@@ -81,7 +81,7 @@ function toggleSearch() {
         }
     }
 }
-
+//errorChecking2 first line
 function goBack() {
     const searchPage = document.getElementById('search-page');
     const resultsPage = document.getElementById('results-page');
