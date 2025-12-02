@@ -1,4 +1,13 @@
 function getWeather() {
+    function hideWhenLoading(){
+        const loadingAnimation = document.getElementById('weather-icon3');
+        loadingAnimation.classList.toggle('hidden');
+        const hiddenWhenLoad = document.getElementById('hiddenWhenLoad');
+        hiddenWhenLoad.classList.toggle('hidden');
+
+    }
+    
+   
     const cityInput = document.getElementById('city');
     
     const cityHeaderInput = document.getElementById('city-header');
@@ -31,14 +40,19 @@ function getWeather() {
     if (searchBar) {
         searchBar.classList.add('hidden');
     }
+    hideWhenLoading();
 
     // First get city coordinates using Open-Meteo's geocoding API
     const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`;
+    const cityNameEl = document.getElementById('city-name');
+    const capitalized = city.charAt(0).toUpperCase() + city.slice(1);
+    cityNameEl.textContent = capitalized;
 
     fetch(geoUrl)
         .then(response => response.json())
         .then(geoData => {
             if (!geoData.results || geoData.results.length === 0) {
+                hideWhenLoading()
                 alert("City not found");
                 return;
             }
@@ -58,6 +72,7 @@ function getWeather() {
                 fetch(aqiUrl).then(r => r.json()).catch(() => ({ current: { us_aqi: null } }))
             ])
                 .then(([weatherData, aqiData]) => {
+                    hideWhenLoading()
                     displayWeatherData(weatherData, aqiData, cityName, lat, lon);
                 })
                 .catch(error => {
@@ -190,14 +205,16 @@ function displayWeatherData(weatherData, aqiData, cityName, lat, lon) {
 }
 
 function displayCurrentWeather(current, cityName, daily) {
+    const tempSection = document.querySelector('.temp-section');
     const cityNameEl = document.getElementById('city-name');
     const weatherCondition = document.getElementById('weather-condition');
     const tempDiv = document.getElementById('temp-div');
     const weatherIcon = document.getElementById('weather-icon');
+    const weatherIcon2 = document.getElementById('weather-icon2');
     const feelsLikeText = document.getElementById('feels-like-text');
     const highLowTemp = document.getElementById('high-low-temp');
     
-    if (!cityNameEl || !weatherCondition || !tempDiv || !weatherIcon || !feelsLikeText || !highLowTemp) {
+    if (!cityNameEl || !weatherCondition || !tempDiv || !weatherIcon2 || !feelsLikeText || !highLowTemp) {
         console.error('Missing DOM elements');
         return;
     }
@@ -211,8 +228,11 @@ function displayCurrentWeather(current, cityName, daily) {
     weatherCondition.textContent = description;
     tempDiv.innerHTML = `${temp}`;
     
-    weatherIcon.src = getWeatherIcon(weatherCode);
-    weatherIcon.style.display = 'block';
+    weatherIcon2.src = getWeatherIcon(weatherCode);
+    weatherIcon2.style.display = 'block';
+    weatherIcon2.classList.toggle('hidden');
+    
+    
     
     feelsLikeText.textContent = `Feels like ${feelsLike}°`;
     

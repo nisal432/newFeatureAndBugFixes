@@ -36,6 +36,17 @@ body {
     position: relative;
     overflow: hidden;
 }
+.loading{
+    width: 30px;
+   
+    animation: spin 1s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 .search-card::before {
     content: '';
