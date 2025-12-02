@@ -1,17 +1,22 @@
 function getWeather() {
     const cityInput = document.getElementById('city');
-    const cityHeaderInput = cityInput;
-    const city = cityInput ? cityInput.value : (cityHeaderInput ? cityHeaderInput.value : '');
-
+    
+    const cityHeaderInput = document.getElementById('city-header');
+    //changed this one
+    const city = cityHeaderInput.value? cityHeaderInput.value : cityInput.value;
+    
     if (!city) {
         alert('Please enter a city');
         return;
     }
 
     // Sync input values
-    if (cityInput && cityHeaderInput) {
-        cityHeaderInput.value = cityInput.value;
-    }
+    //not necessary
+    // if (cityInput && cityHeaderInput) {
+       
+    //     cityHeaderInput.value = cityInput.value;
+    //     console.log(cityHeaderInput.value);
+    // }
 
     // Show loading state
     const searchPage = document.getElementById('search-page');
@@ -84,6 +89,7 @@ function goBack() {
     
     // Clear header search when going back
     if (cityHeaderInput) {
+        console.log("hleow");
         cityHeaderInput.value = '';
     }
     
@@ -265,7 +271,7 @@ function displayWeatherDetails(current, aqi, lat, lon) {
     const aqiLabelEl = document.getElementById('aqi-label');
     const aqiBarFillEl = document.getElementById('aqi-bar-fill');
     if (aqiEl && aqiLabelEl) {
-        if (aqi !== null && aqi !== undefined && !isNaN(aqi)) {
+        if (aqi) { //changed here
             const aqiValue = Math.round(aqi);
             const aqiLabel = getAQILabel(aqiValue);
             aqiEl.textContent = aqiValue;
@@ -343,13 +349,14 @@ function displayHourlyForecast(hourlyData) {
     
     const now = new Date();
     const currentHour = now.getHours();
+    console.log(currentHour);
     
     let headingHtml = '<div id="hourly-heading">🕐 Hourly forecast</div>';
     let wrapperHtml = '<div class="hourly-forecast-wrapper">';
     
-    const itemCount = Math.min(24, hourlyData.time.length);
-    for (let i = 0; i < itemCount; i++) {
-        if (!hourlyData.time[i]) continue;
+    const itemCount = Math.min(24, hourlyData.time.length); //this is also not necessary always returns 24
+    for (let i = 0; i < itemCount; i++) { //willl be fixing here too
+        if (!hourlyData.time[i]) continue; //this will be removed
         
         const time = new Date(hourlyData.time[i]);
         if (isNaN(time.getTime())) continue;
@@ -357,7 +364,7 @@ function displayHourlyForecast(hourlyData) {
         const hour = time.getHours();
         let displayTime;
         
-        if (i === 0 || (hour === currentHour && time.getDate() === now.getDate())) {
+        if (i === 0 || (hour === currentHour && time.getDate() === now.getDate())) { // will remove the i ===0 from here
             displayTime = 'Now';
         } else {
             if (hour === 0) {
@@ -408,7 +415,7 @@ function displayDailyForecast(dailyData) {
     
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     
-    let html = '<div id="daily-heading">📅 10-day forecast</div>';
+    let html = '<div id="daily-heading">📅 10-day forecast</div>';                                   
     
     const itemCount = Math.min(10, dailyData.time.length);
     for (let i = 0; i < itemCount; i++) {
