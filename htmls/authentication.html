@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+    </style>
+    <link rel="stylesheet" href="../cssFiles/authentication.css" />
+  </head>
+  <body>
+    <!-- login-page  -->
+    <main id="login-section">
+      <div class="authentication-section">
+        <h1>Welcome Back</h1>
+        <div class="text">Please sign in to your account</div>
+        <form action="../php/login.php" method="post">
+          <div class="credentials">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              class="input-field"
+              id="username"
+              placeholder="Enter your username"
+            />
+          </div>
+          <div class="credentials">
+            <label for="pswd">Password</label>
+            <input
+              type="password"
+              name="pswd"
+              class="input-field"
+              id="pswd"
+              placeholder="Enter your password"
+            />
+          </div>
+          <button
+            type="submit"
+            id="submit-login-credentials"
+            class="submit-btn"
+          >
+            Sign In
+          </button>
+        </form>
+        <div class="disclaimer">
+          By continuing, you agree to our <span>Terms of Service</span>. Learn
+          how we collect, use, and protect your information in our
+          <span>Privacy Policy</span>.
+        </div>
+        <div class="redirect">
+          Don't have an account?<span id="redirect-signup" onclick="goBack()"
+            >Sign up here</span
+          >
+        </div>
+      </div>
+    </main>
+
+    <!-- signup page -->
+    <main id="signup-section" class="main-signup hidden">
+      <div class="authentication-section">
+        <h1>Create Account</h1>
+        <div class="text">Enter your details to get started</div>
+        <form action="loginValidation.php" method="post">
+          <div class="credentials">
+            <label for="full-name">Full Name</label>
+            <input
+              type="text"
+              name="fullName"
+              class="input-field"
+              id="full-name"
+              placeholder="Enter your Full Name"
+            />
+          </div>
+          <div class="credentials">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="username"
+              class="input-field"
+              id="email"
+              placeholder="Enter your Email"
+            />
+          </div>
+          <div class="credentials">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              class="input-field"
+              id="username"
+              placeholder="Enter your username"
+            />
+          </div>
+          <div class="credentials">
+            <label for="pswd">Password</label>
+            <input
+              type="text"
+              name="pswd"
+              class="input-field"
+              id="pswd"
+              placeholder="Enter your password"
+            />
+          </div>
+          <button
+            type="submit"
+            id="submit-login-credentials"
+            class="submit-btn"
+          >
+            Sign In
+          </button>
+        </form>
+        <div class="disclaimer">
+          By continuing, you agree to our <span>Terms of Service</span>. Learn
+          how we collect, use, and protect your information in our
+          <span>Privacy Policy</span>.
+        </div>
+        <div class="redirect">
+          Already have an account?<span id="redirect-login" onclick="goBack()"
+            >Login here</span
+          >
+        </div>
+      </div>
+    </main>
+  </body>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("redirect");
+    const loginPage = document.getElementById("login-section");
+    const signupPage = document.getElementById("signup-section");
+    if(name ==='signup'){
+      loginPage.classList.add('hidden')
+      signupPage.classList.remove('hidden')
+    }
+
+
+    function goBack() {
+      loginPage.classList.toggle("hidden");
+      signupPage.classList.toggle("hidden");
+    }
+  </script>
+</html>

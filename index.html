@@ -1,120 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Weather</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Search Page -->
-    <div id="search-page" class="search-page">
-        <div class="search-card">
-            <h2>Weather</h2>
-            <div class="search-container">
-                <input type="text" id="city" placeholder="Search for a city" onkeypress="if(event.key==='Enter') getWeather()">
-                <button onclick="getWeather()">Search</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+    </style>
+    <link rel="stylesheet" href="cssFiles/landing.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo-name">
+        <img src="assests/weather.png" alt="" class="logo" />
+        <div class="name">WeatherForecast</div>
+      </div>
+      <ul class="options">
+        <li class="option"><a href="#features">Features</a></li>
+        <li class="option about">
+          About
+          <div class="about-description">
+            <div class="description-page">
+              <div class="heading">hello there</div>
             </div>
+          </div>
+        </li>
+        <li class="option"><a href="#contributors">Contributors</a></li>
+      </ul>
+      <div class="redirect-section">
+        <div class="signin option"><a href="htmls/authentication.html">Sign in</a></div>
+        <button class="signup-btn"><a href="htmls/authentication.html?redirect=signup">Sign up</a></button>
+      </div>
+    </nav>
+    <main>
+      <h1>BCA 4th Sem Project</h1>
+      <h2>A Weather Forecast Website</h2>
+      <div class="small-description">
+        Not only just a static weather website but much more. A weather website
+        with full CRUD operation, Authentication and Authorization.
+      </div>
+      <div class="redirect-section redirect2">
+        <div class="signin option big-signin"><a href="htmls/authentication.html">Sign in</a></div>
+        <button class="signup-btn big-signup-btn">
+          <a href="htmls/authentication.html?redirect=signup">Get Started</a>
+        </button>
+      </div>
+    </main>
+    <section class="features" id="features">
+      <h2 class="features-heading">
+        Features of this mini project, Weather Website
+      </h2>
+      <div class="small-description">
+        Awesome features, You won't expect on a Weather Website
+      </div>
+      <div class="grid">
+        <div class="item">
+          <div class="item-logo margin-logo">
+            <img src="assests/insurance.png" alt="Authen" />
+          </div>
+          <div class="item-heading">Authorization and Authentication</div>
+          <div class="item-description">
+            Yes hard to beleive but, It's a weather website with login and
+            signup system. Also secured as it uses modern hashing alogorithm
+          </div>
         </div>
-    </div>
-
-    <!-- Results Page -->
-    <div id="results-page" class="results-page hidden">
-        <div class="weather-header">
-            <button class="back-button" onclick="goBack()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <div id="city-name" class="header-city-name"></div>
-            <div class="header-search-icon" onclick="toggleSearch()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
-                </svg>
-            </div>
+        <div class="item">
+          <div class="item-logo">
+            <img src="assests/delete (1).png" alt="CRUD" />
+          </div>
+          <div class="item-heading">CRUD Operation</div>
+          <div class="item-description">
+            Yes hard to beleive again but, It's a weather website with CRUD
+            operation.Create, Read, Update And Delete. All included on this mini
+            project
+          </div>
         </div>
-
-        <div class="header-search-bar hidden" id="header-search-bar">
-            <input type="text" id="city-header" placeholder="Search for a city" onkeypress="if(event.key==='Enter') getWeather()">
-            <button onclick="getWeather()">Search</button>
+        <div class="item">
+          <div class="item-logo">
+            <img src="assests/love.png" alt="Authen" />
+          </div>
+          <div class="item-heading">Add Favorites</div>
+          <div class="item-description">
+            You can add your favorite city as a widget and Easily access its
+            weather with ease with just a click.It will be saved until you
+            delete it and even if you reload the website.
+          </div>
         </div>
-
-        <div class="weather-main">
-            <div class="current-weather-section">
-                <div id="loading-state" class="hidden"><img class="loading" src="assests/loading.png" alt=".."> Loading...</div>
-                <div id="hiddenWhenLoad">
-                    <div id="weather-condition" class="weather-condition"></div>
-                    <div class="temp-section">
-                        <div id="temp-div"></div>
-                        <img alt="imgage" id="weather-icon">
-                    
-                    </div>
-                    <div id="feels-like-text" class="feels-like-text"></div>
-                    <div id="high-low-temp" class="high-low-temp"></div>
-                </div>
-            </div>
-
-            <div id="hourly-forecast" class="hourly-section"></div>
-
-            <div id="daily-forecast" class="daily-section"></div>
-
-            <div class="details-grid">
-                <div class="detail-card wind-card">
-                    <div class="detail-icon">💨</div>
-                    <div class="detail-label">Wind</div>
-                    <div id="wind-speed" class="detail-value">--</div>
-                    <div id="wind-direction" class="detail-subvalue">--</div>
-                </div>
-                <div class="detail-card sunrise-card">
-                    <div class="detail-icon">☀️</div>
-                    <div class="detail-label">Sunrise & Sunset</div>
-                    <div class="sunrise-sunset-visual" id="sunrise-sunset-visual"></div>
-                    <div class="sunrise-sunset-times">
-                        <span id="sunrise-time">--</span>
-                        <span id="sunset-time">--</span>
-                    </div>
-                </div>
-                <div class="detail-card uv-card">
-                    <div class="detail-icon">☀️</div>
-                    <div class="detail-label">UV Index</div>
-                    <div id="uv-index" class="detail-value">--</div>
-                    <div id="uv-label" class="detail-subvalue">--</div>
-                </div>
-                <div class="detail-card aqi-card">
-                    <div class="detail-icon">🌫️</div>
-                    <div class="detail-label">AQI</div>
-                    <div id="aqi" class="detail-value">--</div>
-                    <div class="aqi-bar">
-                        <div class="aqi-bar-fill" id="aqi-bar-fill"></div>
-                    </div>
-                    <div id="aqi-label" class="detail-subvalue">--</div>
-                </div>
-                <div class="detail-card visibility-card">
-                    <div class="detail-icon">👁️</div>
-                    <div class="detail-label">Visibility</div>
-                    <div id="visibility" class="detail-value">--</div>
-                </div>
-                <div class="detail-card humidity-card">
-                    <div class="detail-icon">💧</div>
-                    <div class="detail-label">Humidity</div>
-                    <div id="humidity" class="detail-value">--</div>
-                    <div id="dew-point" class="detail-subvalue">--</div>
-                </div>
-                <div class="detail-card pressure-card">
-                    <div class="detail-icon">📊</div>
-                    <div class="detail-label">Pressure</div>
-                    <div id="pressure" class="detail-value">--</div>
-                    <div class="detail-subvalue">mbar</div>
-                </div>
-            </div>
+        <div class="item">
+          <div class="item-logo">
+            <img src="assests/protection.png" alt="Authen" />
+          </div>
+          <div class="item-heading">Admin Page</div>
+          <div class="item-description">
+            This project also features a admin page. Admin can delete or freeze
+            the user's account. Admin can also increase the max favorites count
+            of the users.
+          </div>
         </div>
-    </div>
-    <!-- add favorites -->
-      
-    <script src="./script.js"></script>
-</body>
+        <div class="item">
+          <div class="item-logo">
+            <img src="assests/breakdown.png" alt="Authen" />
+          </div>
+          <div class="item-heading">Full Weather Breakdown</div>
+          <div class="item-description">
+            You won't lack any weather details.Hourly Forcast, 10 days Forecast,
+            AQI, Humidity, Precipitation Percent, And much more.
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-logo">
+            <img src="assests/target.png" alt="Authen" />
+          </div>
+          <div class="item-heading">Accurate Weather Data</div>
+          <div class="item-description">
+            All the weather data are collected from a trusted and accurate open
+            source API from Open Meteo.
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="contributors">
+      <h2 class="features-heading">
+        Contributors/Team Members of this project
+      </h2>
+      <div class="small-description">
+        This is a mini project developed by two members. They are:
+      </div>
+      <div class="members">
+        <div class="member">
+          <div class="member-name">Nischal B.</div>
+          <div class="member-description">
+            I am a passionate BCA 4th Sem student who likes to learn new things. I have worked really hard to create and build this project to this level.
+          </div>
+        </div>
+        <div class="member">
+          <div class="member-name">Shijan D.</div>
+          <div class="member-description">
+            I am a passionate BCA 4th Sem student who likes to learn new things.I have worked really hard to create and build this project to this level.
+          </div>
+        </div>
+      </div>
+	  <h2 class="end">Hope You Liked It</h2>
+	  <div class="small-description">Let's sign in asap and checkout more.</div>
+    </section>
+  </body>
+  <script>
+    const about = document.querySelector(".about");
+    const aboutDescription = document.querySelector(".about-description");
+    const descriptionPage = document.querySelector(".description-page");
+    about.addEventListener("pointerenter", (e) => {
+      setTimeout(() => {
+        aboutDescription.classList.add("about-active");
+        descriptionPage.classList.add("active-description");
+      });
+    });
+    about.addEventListener("pointerleave", (e) => {
+      aboutDescription.classList.remove("about-active");
+      descriptionPage.classList.remove("active-description");
+    });
+  </script>
 </html>

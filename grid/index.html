@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.parent{
+			display: grid;
+			grid-template-columns: 1fr 2fr 1fr	;
+			grid-template-rows: 1fr 2fr 1fr;
+			border: 1px solid black;
+			width: 500px;
+			height: 500px;
+			justify-items: center;
+			align-items: center;
+		}
+		.child{
+			height: 50px;
+			width: 50px;
+			background-color: aqua;
+			grid-area: 2/2;
+			
+		}
+		.profile{
+			height: 50px;
+			width: 50px;
+			background-color: green;
+			grid-area: 1/3;
+		}
+	</style>
+</head>
+<body>
+	<div class="parent" >
+		<div class="child">well</div>
+		<div class="profile">hellothere</div>
+	</div>
+</body>
+</html>
